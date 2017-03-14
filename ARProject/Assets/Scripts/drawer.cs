@@ -30,7 +30,7 @@ public class drawer : MonoBehaviour {
         if (Input.GetKeyDown("space"))
         {
 
-            Instantiate(drawObject, stylusLocation.position, stylusLocation.rotation);
+            //Instantiate(drawObject, stylusLocation.position, stylusLocation.rotation);
         }
 		
 	}

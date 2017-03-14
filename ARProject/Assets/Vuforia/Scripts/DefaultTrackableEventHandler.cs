@@ -17,10 +17,10 @@ namespace Vuforia
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
-    
+
         #endregion // PRIVATE_MEMBER_VARIABLES
 
-
+        //public GameObject stylus;
 
         #region UNTIY_MONOBEHAVIOUR_METHODS
     
@@ -31,6 +31,8 @@ namespace Vuforia
             {
                 mTrackableBehaviour.RegisterTrackableEventHandler(this);
             }
+
+            //stylus = GameObject.Find("Stylus");
         }
 
         #endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -61,21 +63,30 @@ namespace Vuforia
 
         #endregion // PUBLIC_METHODS
 
-
+        
 
         #region PRIVATE_METHODS
 
 
         private void OnTrackingFound()
         {
+            MeshRenderer[] meshRendererComponents = GetComponentsInChildren<MeshRenderer>(true);
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+
 
             // Enable rendering:
             foreach (Renderer component in rendererComponents)
             {
                 component.enabled = true;
+                //Debug.Log("Bingo");
             }
+
+            foreach (MeshRenderer component in meshRendererComponents)
+            {
+                component.enabled = true;
+            }
+
 
             // Enable colliders:
             foreach (Collider component in colliderComponents)
@@ -83,17 +94,28 @@ namespace Vuforia
                 component.enabled = true;
             }
 
+
+            //stylus.SetActive(true);
+
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
 
 
         private void OnTrackingLost()
         {
+            MeshRenderer[] meshRendererComponents = GetComponentsInChildren<MeshRenderer>(true);
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 
             // Disable rendering:
             foreach (Renderer component in rendererComponents)
+            {
+                component.enabled = false;
+
+            }
+
+            // Disable mesh rendering:
+            foreach (MeshRenderer component in meshRendererComponents)
             {
                 component.enabled = false;
             }
@@ -104,7 +126,19 @@ namespace Vuforia
                 component.enabled = false;
             }
 
+            //stylus.SetActive(false);
+
+
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+        }
+
+
+        public void ToggleChildren(bool flag)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(flag);
+            }
         }
 
         #endregion // PRIVATE_METHODS

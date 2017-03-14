@@ -8,38 +8,100 @@ public class LineRendScript : MonoBehaviour {
 
     List<Vector3> linePoints = new List<Vector3>();
     LineRenderer lineRenderer;
-    public float startWidth = 1.0f;
-    public float endWidth = 1.0f;
-    public float threshold = 0.001f;
+    public float startWidth = 0.1f;
+    public float endWidth = 0.1f;
+    public float threshold = 1.0f;
     Camera thisCamera;
     int lineCount = 0;
 
     Vector3 lastPos = Vector3.one * float.MaxValue;
 
+    Vector3 canvasPos;
+    Vector3 stylusPos;
+
+    public Transform stylusLocation;
+    public Transform canvasLocation;
+    
+    bool draw;
+    bool drawing;
 
     void Awake()
     {
         thisCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
+
+        stylusLocation = GameObject.Find("Sphere").GetComponent<Transform>();
+        canvasLocation = GameObject.Find("CanvasTarget").GetComponent<Transform>();
+
+        canvasPos = canvasLocation.position;
+
+        drawing = false;
     }
 
     void Update()
     {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = thisCamera.nearClipPlane;
-        Vector3 mouseWorld = thisCamera.ScreenToWorldPoint(mousePos);
+         
+        if (Input.GetKeyDown("space"))
+        {
+            drawing = !drawing;
+        }
 
-        float dist = Vector3.Distance(lastPos, mouseWorld);
-        if (dist <= threshold)
-            return;
 
-        lastPos = mouseWorld;
-        if (linePoints == null)
-            linePoints = new List<Vector3>();
-        linePoints.Add(mouseWorld);
+        if (drawing)
+        {
+            stylusPos = stylusLocation.position;
 
-        UpdateLine();
+            //stylusPos.y = canvasPos.y;
+
+            bool isThresholdPassed = CheckThreshold();
+
+            float dist = Vector3.Distance(lastPos, stylusPos);
+
+            if (!CheckThreshold())
+            {
+                Debug.Log("Threshold not reached! Distance: " + dist);
+                Debug.Log("Threshold not reached! Threshold: " + threshold);
+                draw = false;
+                return;
+            }
+
+            if (CheckThreshold())
+            {
+                draw = true;
+                Debug.Log("Threshold reached! Distance: " + dist);
+                Debug.Log("Threshold reached! Threshold: " + threshold);
+            }
+
+
+            if (draw)
+            {
+                lastPos = stylusPos;
+                if (linePoints == null)
+                    linePoints = new List<Vector3>();
+                linePoints.Add(stylusPos);
+
+                UpdateLine();
+            }
+
+        }
     }
+
+
+
+    bool CheckThreshold()
+    {
+        float dist = Vector3.Distance(lastPos, stylusPos);
+
+        if (dist <= threshold)
+            return false;
+
+        if (dist > threshold)
+            return true;
+
+        return false;
+    }
+
+
 
 
     void UpdateLine()
