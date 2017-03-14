@@ -16,7 +16,7 @@ public class drawer : MonoBehaviour {
 
     void Awake()
     {
-        stylusLocation = GameObject.Find("Sphere").GetComponent<Transform>();
+        stylusLocation = GameObject.Find("StylusSphere").GetComponent<Transform>();
 
         //canvasPos = GameObject.Find("CanvasTarget").GetComponent<Transform>();
     }

@@ -10,7 +10,7 @@ public class LineRendScript : MonoBehaviour {
     LineRenderer lineRenderer;
     public float startWidth = 0.1f;
     public float endWidth = 0.1f;
-    public float threshold = 1.0f;
+    public float threshold = 0.01f;
     Camera thisCamera;
     int lineCount = 0;
 
@@ -20,7 +20,7 @@ public class LineRendScript : MonoBehaviour {
     Vector3 stylusPos;
 
     public Transform stylusLocation;
-    public Transform canvasLocation;
+    //public Transform canvasLocation;
     
     bool draw;
     bool drawing;
@@ -30,54 +30,63 @@ public class LineRendScript : MonoBehaviour {
         thisCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
 
-        stylusLocation = GameObject.Find("Sphere").GetComponent<Transform>();
-        canvasLocation = GameObject.Find("CanvasTarget").GetComponent<Transform>();
+        stylusLocation = GameObject.Find("StylusSphere").GetComponent<Transform>();
+        //canvasLocation = GameObject.Find("CanvasTarget").GetComponent<Transform>();
 
-        canvasPos = canvasLocation.position;
+        //canvasPos = canvasLocation.position;
 
         drawing = false;
     }
 
+
+    void StartDrawing()
+    {
+        drawing = true;
+    }
+
+
     void Update()
     {
-         
-        if (Input.GetKeyDown("space"))
-        {
-            drawing = !drawing;
-        }
 
 
         if (drawing)
         {
+
             stylusPos = stylusLocation.position;
 
             //stylusPos.y = canvasPos.y;
 
-            bool isThresholdPassed = CheckThreshold();
-
             float dist = Vector3.Distance(lastPos, stylusPos);
 
-            if (!CheckThreshold())
+
+
+            if (!CheckThreshold(dist))
             {
-                Debug.Log("Threshold not reached! Distance: " + dist);
-                Debug.Log("Threshold not reached! Threshold: " + threshold);
+                //Debug.Log("Less than threshold! Distance: " + dist);
                 draw = false;
                 return;
             }
 
-            if (CheckThreshold())
+            else
             {
                 draw = true;
-                Debug.Log("Threshold reached! Distance: " + dist);
-                Debug.Log("Threshold reached! Threshold: " + threshold);
+                Debug.Log("Greater than threshold! Distance: " + dist);
             }
+
+
+
 
 
             if (draw)
             {
                 lastPos = stylusPos;
+
+                //If there's nothing in the list, start it
                 if (linePoints == null)
                     linePoints = new List<Vector3>();
+
+                
+
                 linePoints.Add(stylusPos);
 
                 UpdateLine();
@@ -88,14 +97,14 @@ public class LineRendScript : MonoBehaviour {
 
 
 
-    bool CheckThreshold()
+    bool CheckThreshold(float _dist)
     {
-        float dist = Vector3.Distance(lastPos, stylusPos);
+        //float dist = Vector3.Distance(lastPos, stylusPos);
 
-        if (dist <= threshold)
-            return false;
+        //if (_dist <= threshold)
+        //    return false;
 
-        if (dist > threshold)
+        if (_dist > threshold)
             return true;
 
         return false;
@@ -106,6 +115,7 @@ public class LineRendScript : MonoBehaviour {
 
     void UpdateLine()
     {
+        
         lineRenderer.SetWidth(startWidth, endWidth);
         lineRenderer.SetVertexCount(linePoints.Count);
 
@@ -114,5 +124,12 @@ public class LineRendScript : MonoBehaviour {
             lineRenderer.SetPosition(i, linePoints[i]);
         }
         lineCount = linePoints.Count;
+    }
+
+
+    // Called by Line Manager to stop drawing from this gameobject
+    void StopDrawing()
+    {
+        drawing = false;
     }
 }

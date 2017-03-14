@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\DrawStylusScript.cs" />
+    <Compile Include="Assets\Scripts\LineManager.cs" />
     <Compile Include="Assets\Scripts\LineRendScript.cs" />
     <Compile Include="Assets\Scripts\drawer.cs" />
     <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
