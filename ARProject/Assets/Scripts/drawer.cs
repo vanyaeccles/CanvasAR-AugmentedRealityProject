@@ -18,14 +18,14 @@ public class drawer : MonoBehaviour {
     {
         stylusLocation = GameObject.Find("Sphere").GetComponent<Transform>();
 
-        canvasPos = GameObject.Find("CanvasTarget").GetComponent<Transform>();
+        //canvasPos = GameObject.Find("CanvasTarget").GetComponent<Transform>();
     }
 
 
 	// Update is called once per frame
 	void Update () {
 
-        Vector3 drawPos = new Vector3(stylusLocation.position.x, canvasPos.position.y, stylusLocation.position.z);
+        //Vector3 drawPos = new Vector3(stylusLocation.position.x, canvasPos.position.y, stylusLocation.position.z);
 
         if (Input.GetKeyDown("space"))
         {
