@@ -70,7 +70,7 @@ public class LineRendScript : MonoBehaviour {
             else
             {
                 draw = true;
-                Debug.Log("Greater than threshold! Distance: " + dist);
+                //Debug.Log("Greater than threshold! Distance: " + dist);
             }
 
 
