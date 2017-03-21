@@ -51,6 +51,7 @@ public class LineManager : MonoBehaviour {
         paletteLineRenderer = GameObject.Find("PaletteLine").GetComponent<LineRenderer>();
         //paletteLineRenderer.material = new Material(Shader.Find("Custom/LineShader"));
         SetPaletteColour();
+        SetPaletteLineThickness();
 
         isHoldingLineDrawer = false;
 
@@ -124,12 +125,15 @@ public class LineManager : MonoBehaviour {
 
     void SetLineThickness()
     {
+        SetPaletteLineThickness();
         lineDrawer.GetComponent<LineRendScript>().setWidth(lineThickness, lineThickness);
+    }
 
+    void SetPaletteLineThickness()
+    {
         paletteLineRenderer.startWidth = lineThickness;
         paletteLineRenderer.endWidth = lineThickness;
     }
-
 
     public void ThicknessPlus()
     {
