@@ -48,7 +48,8 @@ public class LineManager : MonoBehaviour {
         drawPos = new Vector3(0.0f, 0.0f, 0.0f);
 
         paletteLineRenderer = GameObject.Find("PaletteLine").GetComponent<LineRenderer>();
-        paletteLineRenderer.material = new Material(Shader.Find("Custom/LineShader"));
+        //paletteLineRenderer.material = new Material(Shader.Find("Custom/LineShader"));
+        //paletteLineRenderer.material = new Material(Shader.Find("Unlit"));
 
         isHoldingLineDrawer = false;
 
