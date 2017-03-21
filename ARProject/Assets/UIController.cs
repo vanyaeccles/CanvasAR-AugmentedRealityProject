@@ -34,6 +34,9 @@ public class UIController : MonoBehaviour {
         if (Input.GetKeyDown("space"))
             linemanager.StopDrawing();
 
+        if (Input.GetKeyDown("p"))
+            linemanager.UndoLastLine();
+
         // Thickness
         if (Input.GetKeyDown("t"))
             linemanager.ThicknessPlus();

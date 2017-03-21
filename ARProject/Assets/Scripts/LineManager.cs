@@ -9,8 +9,9 @@ public class LineManager : MonoBehaviour {
     public int lineDrawerIndex;
 
     //instance of the lineDrawer, basically a gameobject with a line renderer and associated LineRendScript for drawing
-    public GameObject lineDrawer;
-    private GameObject currentLineDrawer;
+    public GameObject baseLineDrawer;
+    //This is the one that will 
+    private GameObject lineDrawer;
 
     private LineRenderer paletteLineRenderer;
 
@@ -49,7 +50,7 @@ public class LineManager : MonoBehaviour {
 
         paletteLineRenderer = GameObject.Find("PaletteLine").GetComponent<LineRenderer>();
         //paletteLineRenderer.material = new Material(Shader.Find("Custom/LineShader"));
-        //paletteLineRenderer.material = new Material(Shader.Find("Unlit"));
+        SetPaletteColour();
 
         isHoldingLineDrawer = false;
 
@@ -61,6 +62,9 @@ public class LineManager : MonoBehaviour {
         drawPos.x = (stylusLocation.position.x);
         drawPos.y = (this.transform.position.y); // + (lineDrawerIndex * 0.1f); // Each line will be further out than the last
         drawPos.z = (stylusLocation.position.z);
+
+
+        Debug.Log("NUMBER: " + lineDrawers.Count);
     }
 
 
@@ -68,10 +72,11 @@ public class LineManager : MonoBehaviour {
     {
         if (!isHoldingLineDrawer)
         {
-            lineDrawerIndex = lineDrawers.Count;
+            lineDrawerIndex = lineDrawers.Count + 1;
 
-            lineDrawer = Instantiate(lineDrawer, drawPos, stylusLocation.rotation);
-            lineDrawers.Add(lineDrawer);
+            //lineDrawer 
+
+            lineDrawer = Instantiate(baseLineDrawer, drawPos, stylusLocation.rotation);
             lineDrawer.SendMessage("StartDrawing");
             isHoldingLineDrawer = true;
 
@@ -86,6 +91,7 @@ public class LineManager : MonoBehaviour {
     {
         if (isHoldingLineDrawer)
         {
+            lineDrawers.Add(lineDrawer);
             // Stop drawing from the current game object
             lineDrawer.SendMessage("StopDrawing");
             isHoldingLineDrawer = false;
@@ -94,6 +100,23 @@ public class LineManager : MonoBehaviour {
             //Debug.Log("Stopping Drawing");
         }
     }
+
+    public void UndoLastLine()
+    {
+        //Destroy(lineDrawers[lineDrawers.Count - 1]);
+        //lineDrawers.RemoveAt(lineDrawers.Count - 1);
+
+        RemoveLine(lineDrawers[lineDrawers.Count - 1]);
+
+        Debug.Log("Removing last line");
+    }
+
+    void RemoveLine(GameObject lineobject)
+    {
+        lineDrawers.Remove(lineobject);
+        Destroy(lineobject);
+    }
+
 
 
     #region THICKNESS
@@ -110,13 +133,13 @@ public class LineManager : MonoBehaviour {
 
     public void ThicknessPlus()
     {
-        lineThickness += 0.1f;
+        lineThickness += 0.05f;
         SetLineThickness();
     }
 
     public void ThicknessMinus()
     {
-        lineThickness -= 0.1f;
+        lineThickness -= 0.05f;
         SetLineThickness();
     }
 
@@ -124,6 +147,8 @@ public class LineManager : MonoBehaviour {
 
 
 
+
+    #region COLOUR_STUFF
 
     void SetLineColour()
     {
@@ -143,6 +168,8 @@ public class LineManager : MonoBehaviour {
 
         paletteLineRenderer.material.color = activeColour;
     }
+
+    #endregion
 
 
 
