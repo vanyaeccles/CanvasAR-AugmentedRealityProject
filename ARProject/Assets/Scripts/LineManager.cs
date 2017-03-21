@@ -6,10 +6,13 @@ public class LineManager : MonoBehaviour {
 
     //List of gameobjects to hold the line drawers
     private List<GameObject> lineDrawers = new List<GameObject>();
+    public int lineDrawerIndex;
 
     //instance of the lineDrawer, basically a gameobject with a line renderer and associated LineRendScript for drawing
     public GameObject lineDrawer;
     private GameObject currentLineDrawer;
+
+    private LineRenderer paletteLineRenderer;
 
     public GameObject paletteCube;
     public GameObject colourSelector;
@@ -20,6 +23,7 @@ public class LineManager : MonoBehaviour {
     public Transform stylusLocation;
 
 
+    Vector3 drawPos;
 
 
     bool isHoldingLineDrawer;
@@ -28,31 +32,44 @@ public class LineManager : MonoBehaviour {
     Color savedColour1;
     Color savedColour2;
 
+
+
     float lineThickness;
 
-
-
+    
     // Use this for initialization
     void Start ()
     {
-        activeColour = Color.white;
-
+        activeColour = new Color(0.0f, 0.0f, 0.0f);
         lineThickness = 0.1f;
-
-        //SetSelectorCubeColour();
 
         stylusLocation = GameObject.Find("StylusSphere").GetComponent<Transform>();
 
+        drawPos = new Vector3(0.0f, 0.0f, 0.0f);
+
+        paletteLineRenderer = GameObject.Find("PaletteLine").GetComponent<LineRenderer>();
+        paletteLineRenderer.material = new Material(Shader.Find("Custom/LineShader"));
+
         isHoldingLineDrawer = false;
+
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        drawPos.x = (stylusLocation.position.x);
+        drawPos.y = (this.transform.position.y); // + (lineDrawerIndex * 0.1f); // Each line will be further out than the last
+        drawPos.z = (stylusLocation.position.z);
+    }
 
-        if (Input.GetKeyDown("h") && !isHoldingLineDrawer)
+
+    public void StartDrawing()
+    {
+        if (!isHoldingLineDrawer)
         {
-            lineDrawer = Instantiate(lineDrawer, stylusLocation.position, stylusLocation.rotation);
+            lineDrawerIndex = lineDrawers.Count;
+
+            lineDrawer = Instantiate(lineDrawer, drawPos, stylusLocation.rotation);
             lineDrawers.Add(lineDrawer);
             lineDrawer.SendMessage("StartDrawing");
             isHoldingLineDrawer = true;
@@ -62,9 +79,11 @@ public class LineManager : MonoBehaviour {
 
             //Debug.Log("Currently Drawing");
         }
+    }
 
-
-        if (Input.GetKeyDown("space") && isHoldingLineDrawer)
+    public void StopDrawing()
+    {
+        if (isHoldingLineDrawer)
         {
             // Stop drawing from the current game object
             lineDrawer.SendMessage("StopDrawing");
@@ -73,9 +92,7 @@ public class LineManager : MonoBehaviour {
             //lineDrawer.GetComponent<LineRendScript>().enabled = false;
             //Debug.Log("Stopping Drawing");
         }
-
     }
-
 
 
     #region THICKNESS
@@ -83,19 +100,23 @@ public class LineManager : MonoBehaviour {
 
     void SetLineThickness()
     {
-        lineDrawer.GetComponent<LineRenderer>().startWidth = lineThickness;
-        lineDrawer.GetComponent<LineRenderer>().endWidth = lineThickness;
+        lineDrawer.GetComponent<LineRendScript>().setWidth(lineThickness, lineThickness);
+
+        paletteLineRenderer.startWidth = lineThickness;
+        paletteLineRenderer.endWidth = lineThickness;
     }
+
 
     public void ThicknessPlus()
     {
-        lineThickness += 0.5f;
-        //Debug.Log("Called");
+        lineThickness += 0.1f;
+        SetLineThickness();
     }
 
     public void ThicknessMinus()
     {
-        lineThickness -= 0.5f;
+        lineThickness -= 0.1f;
+        SetLineThickness();
     }
 
     #endregion
@@ -106,6 +127,7 @@ public class LineManager : MonoBehaviour {
     void SetLineColour()
     {
         lineDrawer.GetComponent<LineRenderer>().material.color = activeColour;
+        //lineDrawer.GetComponent<LineRenderer>().material.color = Color.red;
     }
 
     public void SetPaletteCubeColour()
@@ -113,10 +135,12 @@ public class LineManager : MonoBehaviour {
         paletteCube.GetComponent<Renderer>().material.color = activeColour;
     }
 
-    public void SetSelectorCubeColour()
+    public void SetPaletteColour()
     {
-        colourSelector.GetComponent<Renderer>().material.color = activeColour;
-        SetPaletteCubeColour();
+        //colourSelector.GetComponent<Renderer>().material.color = activeColour;
+        //SetPaletteCubeColour();
+
+        paletteLineRenderer.material.color = activeColour;
     }
 
 
@@ -126,20 +150,20 @@ public class LineManager : MonoBehaviour {
     public void SetColourBlack()
     {
         activeColour = Color.black;
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
     public void SetColourWhite()
     {
         activeColour = Color.white;
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
     public void SetColourRed()
     {
         activeColour = Color.red;
 
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
 
@@ -147,14 +171,14 @@ public class LineManager : MonoBehaviour {
     {
         activeColour = Color.green;
 
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
     public void SetColourBlue()
     {
         activeColour = Color.blue;
 
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
 
@@ -162,7 +186,7 @@ public class LineManager : MonoBehaviour {
     {
         activeColour = Color.yellow;
 
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
     //For saving colours and selecting saved colours
@@ -182,13 +206,13 @@ public class LineManager : MonoBehaviour {
     public void SetColourSavedCol1()
     {
         activeColour = savedColour1;
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
     public void SetColourSavedCol2()
     {
         activeColour = savedColour2;
-        SetPaletteCubeColour();
+        SetPaletteColour();
     }
 
 
@@ -203,58 +227,70 @@ public class LineManager : MonoBehaviour {
     {
         Debug.Log("Red Plus");
         if (CheckChannel(0))
-            activeColour[0] += 0.1f;
-        SetSelectorCubeColour();
+            activeColour.r += 0.05f;
+        if (activeColour[0] > 1.0f)
+            activeColour[0] = 1.0f;
+        SetPaletteColour();
     }
 
     public void RedChannelMinus()
     {
         Debug.Log("Red Minus");
         if (CheckChannel(0))
-            activeColour[0] -= 0.1f;
-        SetSelectorCubeColour();
+            activeColour.r -= 0.05f;
+        if (activeColour[0] < 0.0f)
+            activeColour[0] = 0.0f;
+        SetPaletteColour();
     }
 
     public void BlueChannelPlus()
     {
         Debug.Log("Blue Plus");
         if (CheckChannel(1))
-            activeColour[1] += 0.1f;
-        SetSelectorCubeColour();
+            activeColour[1] += 0.05f;
+        if (activeColour[1] > 1.0f)
+            activeColour[1] = 1.0f;
+        SetPaletteColour();
     }
 
     public void BlueChannelMinus()
     {
         Debug.Log("Blue Minus");
         if (CheckChannel(1))
-            activeColour[1] -= 0.1f;
-        SetSelectorCubeColour();
+            activeColour[1] -= 0.05f;
+        if (activeColour[1] < 0.0f)
+            activeColour[1] = 0.0f;
+        SetPaletteColour();
     }
 
     public void GreenChannelPlus()
     {
         Debug.Log("Green Plus");
         if (CheckChannel(2))
-            activeColour[2] += 0.1f;
-        SetSelectorCubeColour();
+            activeColour[2] += 0.05f;
+        if (activeColour[2] > 1.0f)
+            activeColour[2] = 1.0f;
+        SetPaletteColour();
     }
 
     public void GreenChannelMinus()
     {
         Debug.Log("Green Minus");
         if (CheckChannel(2))
-            activeColour[2] -= 0.1f;
-        SetSelectorCubeColour();
+            activeColour[2] -= 0.05f;
+        if (activeColour[2] < 0.0f)
+            activeColour[2] = 0.0f;
+        SetPaletteColour();
     }
 
 
     public bool CheckChannel(int i)
     {
         //Check that the colour falls within the channel range
-        if ((activeColour[i] >= 0.0f) && (activeColour[i] <= 1.0f))
+        //if ((activeColour[i] > 0.0f) && (activeColour[i] < 1.0f))
             return true;
-        else
-            return false;
+        //else
+        //    return false;
     }
 
     #endregion

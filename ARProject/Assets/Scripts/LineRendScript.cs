@@ -18,9 +18,10 @@ public class LineRendScript : MonoBehaviour {
 
     Vector3 canvasPos;
     Vector3 stylusPos;
+    int lineIndex;
 
     public Transform stylusLocation;
-    //public Transform canvasLocation;
+    public Transform canvasLocation;
     
     bool draw;
     bool drawing;
@@ -31,12 +32,21 @@ public class LineRendScript : MonoBehaviour {
         lineRenderer = GetComponent<LineRenderer>();
 
         stylusLocation = GameObject.Find("StylusSphere").GetComponent<Transform>();
-        //canvasLocation = GameObject.Find("CanvasTarget").GetComponent<Transform>();
+        canvasLocation = GameObject.Find("CanvasTarget").GetComponent<Transform>();
+        canvasPos = canvasLocation.position;
 
-        //canvasPos = canvasLocation.position;
+        //stylusPos = GameObject.Find("CanvasTarget").GetComponent<LineManager>().stylusLocation.position;
+        lineIndex = GameObject.Find("CanvasTarget").GetComponent<LineManager>().lineDrawerIndex;
 
         drawing = false;
     }
+
+    public void setWidth(float swidth, float ewidth)
+    {
+        startWidth = swidth;
+        endWidth = ewidth;
+    }
+
 
 
     void StartDrawing()
@@ -53,8 +63,7 @@ public class LineRendScript : MonoBehaviour {
         {
 
             stylusPos = stylusLocation.position;
-
-            //stylusPos.y = canvasPos.y;
+            stylusPos.y = canvasPos.y + (0.1f * lineIndex+1);
 
             float dist = Vector3.Distance(lastPos, stylusPos);
 
