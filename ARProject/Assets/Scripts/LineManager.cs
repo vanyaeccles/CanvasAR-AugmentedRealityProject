@@ -14,6 +14,7 @@ public class LineManager : MonoBehaviour {
     private GameObject lineDrawer;
 
     private LineRenderer paletteLineRenderer;
+    private Renderer canRenderer;
 
     public GameObject paletteCube;
     public GameObject colourSelector;
@@ -49,6 +50,7 @@ public class LineManager : MonoBehaviour {
         drawPos = new Vector3(0.0f, 0.0f, 0.0f);
 
         paletteLineRenderer = GameObject.Find("PaletteLine").GetComponent<LineRenderer>();
+        canRenderer = GameObject.Find("cantop_default").GetComponent<Renderer>();
         //paletteLineRenderer.material = new Material(Shader.Find("Custom/LineShader"));
         SetPaletteColour();
         SetPaletteLineThickness();
@@ -65,7 +67,7 @@ public class LineManager : MonoBehaviour {
         drawPos.z = (stylusLocation.position.z);
 
 
-        Debug.Log("NUMBER: " + lineDrawers.Count);
+        //Debug.Log("NUMBER: " + lineDrawers.Count);
     }
 
 
@@ -171,6 +173,7 @@ public class LineManager : MonoBehaviour {
         //SetPaletteCubeColour();
 
         paletteLineRenderer.material.color = activeColour;
+        canRenderer.material.color = activeColour;
     }
 
     #endregion

@@ -29,13 +29,21 @@ public class UIController : MonoBehaviour {
     {
          
         // Drawing
-        if (Input.GetKeyDown("h"))
+        if (Input.GetKeyDown("h") || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        {
             linemanager.StartDrawing();
-        if (Input.GetKeyDown("space"))
+            Debug.Log("called");
+        }
+            
+        if (Input.GetKeyDown("space") || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
             linemanager.StopDrawing();
 
         if (Input.GetKeyDown("p"))
+        {
             linemanager.UndoLastLine();
+            Debug.Log("undo");
+        }
+            
 
         // Thickness
         if (Input.GetKeyDown("t"))
