@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\ColourCollider\RedMinusCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\RedPlusCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\WhiteCollider.cs" />
+    <Compile Include="Assets\Scripts\DimCanvasCollision\CanvasButton.cs" />
+    <Compile Include="Assets\Scripts\DimCanvasCollision\DimButton.cs" />
     <Compile Include="Assets\Scripts\DrawStylusScript.cs" />
     <Compile Include="Assets\Scripts\LineManager.cs" />
     <Compile Include="Assets\Scripts\LineRendScript.cs" />

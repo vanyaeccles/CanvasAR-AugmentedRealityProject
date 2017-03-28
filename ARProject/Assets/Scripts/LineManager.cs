@@ -69,11 +69,12 @@ public class LineManager : MonoBehaviour {
             Ray ray = new Ray(stylusLocation.position, stylusLocation.forward);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.tag == "DrawCanvas")
-                {
-                    float distance = (stylusLocation.position - hit.point).magnitude;
-                    Debug.DrawRay(stylusLocation.position, stylusLocation.forward * distance, Color.green);
-                }
+                float distance = (stylusLocation.position - hit.point).magnitude;
+                Debug.DrawRay(stylusLocation.position, stylusLocation.forward * distance, Color.green);
+
+
+                //ProcessHitObject(hit.collider.tag);
+                
             }
         }
 
@@ -84,6 +85,13 @@ public class LineManager : MonoBehaviour {
         
     }
 
+    //public void ProcessHitObject(string objectTag)
+    //{
+    //    if (hit.collider.tag == "DrawCanvas")
+    //    {
+
+    //    }
+    //}
 
     public void StartDrawing()
     {

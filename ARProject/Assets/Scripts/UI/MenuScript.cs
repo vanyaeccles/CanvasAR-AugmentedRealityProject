@@ -9,7 +9,9 @@ public class MenuScript : MonoBehaviour
 
     public GameObject thicknessPalette;
 
-    public GameObject basicColourPalette;
+    public GameObject dimPalette;
+
+    public GameObject canPalette;
 
     bool isSelecting;
 
@@ -41,7 +43,9 @@ public class MenuScript : MonoBehaviour
 
         thicknessPalette.SetActive(true);
 
-        basicColourPalette.SetActive(true);
+        dimPalette.SetActive(true);
+
+        canPalette.SetActive(true);
 
         isSelecting = true;
     }
@@ -52,7 +56,9 @@ public class MenuScript : MonoBehaviour
 
         thicknessPalette.SetActive(false);
 
-        basicColourPalette.SetActive(false);
+        dimPalette.SetActive(false);
+
+        canPalette.SetActive(false);
 
         isSelecting = false;
     }

@@ -104,7 +104,7 @@ public class LineRendScript : MonoBehaviour {
 
 
                 // Draw on the canvas plane (0.0 on the y-axis), but in from the last layer so to avoid z-fighting issues
-                stylusPos.y += 0.1f + (0.01f * lineIndex);
+                stylusPos.y += 0.1f + (0.05f * lineIndex);
 
 
 
