@@ -29,6 +29,7 @@ public class LineManager : MonoBehaviour {
 
 
     bool isHoldingLineDrawer;
+    bool is3d;
 
     Color activeColour;
     Color savedColour1;
@@ -56,18 +57,31 @@ public class LineManager : MonoBehaviour {
         SetPaletteLineThickness();
 
         isHoldingLineDrawer = false;
-
+        is3d = false;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-        drawPos.x = (stylusLocation.position.x);
-        drawPos.y = (this.transform.position.y); // + (lineDrawerIndex * 0.1f); // Each line will be further out than the last
-        drawPos.z = (stylusLocation.position.z);
+        if(!is3d)
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(stylusLocation.position, stylusLocation.forward);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.tag == "DrawCanvas")
+                {
+                    float distance = (stylusLocation.position - hit.point).magnitude;
+                    Debug.DrawRay(stylusLocation.position, stylusLocation.forward * distance, Color.green);
+                }
+            }
+        }
 
-
-        //Debug.Log("NUMBER: " + lineDrawers.Count);
+        if(is3d)
+        {
+            Debug.DrawRay(stylusLocation.position, stylusLocation.forward * 0.5f, Color.red);
+        }
+        
     }
 
 
@@ -75,20 +89,33 @@ public class LineManager : MonoBehaviour {
     {
         if (!isHoldingLineDrawer)
         {
-            lineDrawerIndex = lineDrawers.Count + 1;
+            
+            lineDrawerIndex = lineDrawers.Count;
+            //Debug.Log("lineIndex" + lineDrawerIndex);
+
 
             //lineDrawer 
-
             lineDrawer = Instantiate(baseLineDrawer, drawPos, stylusLocation.rotation);
-            lineDrawer.SendMessage("StartDrawing");
+                
             isHoldingLineDrawer = true;
 
             SetLineColour();
             SetLineThickness();
 
-            //Debug.Log("Currently Drawing");
+            if (!is3d)
+            {
+                lineDrawer.SendMessage("StartDrawing");
+                //Debug.Log("Currently Drawing on the 2D plane");
+            }
+
+            if(is3d)
+            {
+                lineDrawer.SendMessage("StartDrawing3D");
+                //Debug.Log("Currently Drawing in 3D");
+            }
         }
     }
+
 
     public void StopDrawing()
     {
@@ -102,6 +129,11 @@ public class LineManager : MonoBehaviour {
             //lineDrawer.GetComponent<LineRendScript>().enabled = false;
             //Debug.Log("Stopping Drawing");
         }
+    }
+
+    public void Toggle3d()
+    {
+        is3d = !is3d;
     }
 
     public void UndoLastLine()

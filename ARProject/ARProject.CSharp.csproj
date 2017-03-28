@@ -78,10 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BlackCollider.cs" />
-    <Compile Include="Assets\MenuScript.cs" />
-    <Compile Include="Assets\SaveColour2Collider.cs" />
-    <Compile Include="Assets\SaveColourCollider.cs" />
+    <Compile Include="Assets\Scripts\CanvasManager.cs" />
+    <Compile Include="Assets\Scripts\ColourCollider\BlackCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\BlueMinusCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\BluePlusCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\CollisionResponse.cs" />
@@ -89,15 +87,19 @@
     <Compile Include="Assets\Scripts\ColourCollider\GreenPlusCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\RedMinusCollider.cs" />
     <Compile Include="Assets\Scripts\ColourCollider\RedPlusCollider.cs" />
+    <Compile Include="Assets\Scripts\ColourCollider\WhiteCollider.cs" />
     <Compile Include="Assets\Scripts\DrawStylusScript.cs" />
     <Compile Include="Assets\Scripts\LineManager.cs" />
     <Compile Include="Assets\Scripts\LineRendScript.cs" />
+    <Compile Include="Assets\Scripts\ThicknessCollider\ThicknessButton.cs" />
+    <Compile Include="Assets\Scripts\ThicknessCollider\ThicknessMinusCollider.cs" />
+    <Compile Include="Assets\Scripts\ThicknessCollider\ThicknessPlusCollider.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuScript.cs" />
+    <Compile Include="Assets\Scripts\UI\SaveColour2Collider.cs" />
+    <Compile Include="Assets\Scripts\UI\SaveColourCollider.cs" />
+    <Compile Include="Assets\Scripts\UI\SetColourScript.cs" />
+    <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\drawer.cs" />
-    <Compile Include="Assets\SetColourScript.cs" />
-    <Compile Include="Assets\ThicknessButton.cs" />
-    <Compile Include="Assets\ThicknessMinusCollider.cs" />
-    <Compile Include="Assets\ThicknessPlusCollider.cs" />
-    <Compile Include="Assets\UIController.cs" />
     <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Scripts\CloudRecoBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Scripts\CylinderTargetBehaviour.cs" />
@@ -133,7 +135,6 @@
     <Compile Include="Assets\Vuforia\Scripts\WireframeBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Scripts\WireframeTrackableEventHandler.cs" />
     <Compile Include="Assets\Vuforia\Scripts\WordBehaviour.cs" />
-    <Compile Include="Assets\WhiteCollider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />

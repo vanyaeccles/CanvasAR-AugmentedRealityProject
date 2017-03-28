@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//
+// This is old code, from the first stage of the project
+//
+
+
 public class drawer : MonoBehaviour {
 
     public GameObject drawObject;

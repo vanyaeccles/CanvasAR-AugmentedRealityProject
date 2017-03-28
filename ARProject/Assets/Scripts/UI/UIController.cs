@@ -11,11 +11,13 @@ using UnityEngine;
 public class UIController : MonoBehaviour {
 
     private LineManager linemanager;
+    private CanvasManager canvasmanager;
 
 
     void Awake()
     {
         linemanager = GameObject.Find("CanvasTarget").GetComponent<LineManager>();
+        canvasmanager = GameObject.Find("Canvas").GetComponent<CanvasManager>();
     }
 
 	// Use this for initialization
@@ -32,7 +34,7 @@ public class UIController : MonoBehaviour {
         if (Input.GetKeyDown("h") || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             linemanager.StartDrawing();
-            Debug.Log("called");
+            //Debug.Log("called");
         }
             
         if (Input.GetKeyDown("space") || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
@@ -41,9 +43,12 @@ public class UIController : MonoBehaviour {
         if (Input.GetKeyDown("p"))
         {
             linemanager.UndoLastLine();
-            Debug.Log("undo");
+            //Debug.Log("undo");
         }
-            
+
+        // Draw in 3D
+        if (Input.GetKeyDown("x"))
+            linemanager.Toggle3d();
 
         // Thickness
         if (Input.GetKeyDown("t"))
@@ -74,6 +79,14 @@ public class UIController : MonoBehaviour {
             linemanager.SetColourYellow();
         if (Input.GetKeyDown("n"))
             linemanager.SetColourBlue();
+
+
+
+        //Canvas 
+        if (Input.GetKeyDown("z"))
+            canvasmanager.RenderCanvas();
+
+
 
     }
 
