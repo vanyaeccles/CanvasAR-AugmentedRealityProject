@@ -12,7 +12,7 @@ public class BlackCollider : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Green Minus");
-
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().SetColourBlack();
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().SetColourBlack();
     }
 }

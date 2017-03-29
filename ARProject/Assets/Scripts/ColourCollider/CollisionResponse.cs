@@ -7,8 +7,8 @@ public class CollisionResponse : MonoBehaviour {
 	void OnCollisionEnter (Collision collision)
     {
         //Debug.Log("Enter Called");
-
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().SetColourRed();
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().SetColourRed();
     }
 
     //void OnCollisionStay (Collision collision)

@@ -12,7 +12,8 @@ public class WhiteCollider : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Green Minus");
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().SetColourWhite();
 
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().SetColourWhite();
     }
 }

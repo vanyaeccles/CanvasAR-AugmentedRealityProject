@@ -7,7 +7,7 @@ public class BluePlusCollider : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Blue Plus");
-
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().BlueChannelPlus();
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().BlueChannelPlus();
     }
 }

@@ -6,6 +6,7 @@ public class ThicknessMinusCollider : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().ThicknessMinus();
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().ThicknessMinus();
     }
 }

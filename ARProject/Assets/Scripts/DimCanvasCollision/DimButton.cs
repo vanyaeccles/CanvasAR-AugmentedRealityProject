@@ -17,7 +17,8 @@ public class DimButton : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().Toggle3d();
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().Toggle3d();
 
         buttonText.text = SetText();
     }
@@ -25,7 +26,8 @@ public class DimButton : MonoBehaviour {
 
     void OnCollisionExit(Collision collision)
     {
-        is2D = !is2D;
+        if (collision.gameObject.tag == "StylusSphere")
+            is2D = !is2D;
     }
 
     string SetText()

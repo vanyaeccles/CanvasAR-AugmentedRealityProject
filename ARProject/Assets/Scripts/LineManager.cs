@@ -35,7 +35,7 @@ public class LineManager : MonoBehaviour {
     Color savedColour1;
     Color savedColour2;
 
-
+    public GameObject laser;
 
     float lineThickness;
 
@@ -70,11 +70,10 @@ public class LineManager : MonoBehaviour {
             if (Physics.Raycast(ray, out hit))
             {
                 float distance = (stylusLocation.position - hit.point).magnitude;
-                Debug.DrawRay(stylusLocation.position, stylusLocation.forward * distance, Color.green);
-
+                Debug.DrawRay(stylusLocation.position, stylusLocation.forward * distance, Color.black);
 
                 //ProcessHitObject(hit.collider.tag);
-                
+
             }
         }
 

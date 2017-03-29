@@ -13,13 +13,27 @@ public class MenuScript : MonoBehaviour
 
     public GameObject canPalette;
 
+    public GameObject undoButton;
+
     bool isSelecting;
+
+
+
+    void Awake()
+    {
+        //colourPalettePanelActivate(false);
+    }
 
 
     void OnCollisionEnter(Collision collision)
     {
-
-        colourPalettePanelActivate(isSelecting);
+        Debug.Log("Collision with stylus");
+        if (collision.gameObject.tag == "StylusSphere")
+        {
+            colourPalettePanelActivate(isSelecting);
+            Debug.Log("Collision with stylus");
+        }
+            
     }
 
 
@@ -39,28 +53,60 @@ public class MenuScript : MonoBehaviour
 
     void ActivateAll()
     {
-        colourPalette.SetActive(true);
+        ActivateColourP(true);
 
-        thicknessPalette.SetActive(true);
+        ActivateThicknessP(true);
 
-        dimPalette.SetActive(true);
+        ActivateDimP(true);
 
-        canPalette.SetActive(true);
+        ActivateCanP(true);
+
+        ActivateUndoB(true);
 
         isSelecting = true;
     }
 
     void ShutDownAll()
     {
-        colourPalette.SetActive(false);
+        ActivateColourP(false);
 
-        thicknessPalette.SetActive(false);
+        ActivateThicknessP(false);
 
-        dimPalette.SetActive(false);
+        ActivateDimP(false);
 
-        canPalette.SetActive(false);
+        ActivateCanP(false);
+
+        ActivateUndoB(false);
 
         isSelecting = false;
     }
+
+
+    void ActivateColourP(bool flag)
+    {
+        colourPalette.SetActive(flag);
+    }
+
+    void ActivateThicknessP(bool flag)
+    {
+        thicknessPalette.SetActive(flag);
+    }
+
+    void ActivateDimP(bool flag)
+    {
+        dimPalette.SetActive(flag);
+    }
+
+    void ActivateCanP(bool flag)
+    {
+        canPalette.SetActive(flag);
+    }
+
+    void ActivateUndoB(bool flag)
+    {
+        undoButton.SetActive(flag);
+    }
+
+
 
 }

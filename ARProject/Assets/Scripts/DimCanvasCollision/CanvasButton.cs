@@ -8,16 +8,23 @@ public class CanvasButton : MonoBehaviour {
 
     public TextMesh buttonText;
 
-    void OnCollisionEnter(Collision collision)
+    void Awake()
     {
         GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
 
         buttonText.text = SetText();
     }
 
     void OnCollisionExit(Collision collision)
     {
-        isCanvasOn = !isCanvasOn;
+        if (collision.gameObject.tag == "StylusSphere")
+            isCanvasOn = !isCanvasOn;
     }
 
     string SetText()

@@ -7,7 +7,7 @@ public class RedMinusCollider : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Red Minus");
-
-        GameObject.Find("CanvasTarget").GetComponent<LineManager>().RedChannelMinus();
+        if (collision.gameObject.tag == "StylusSphere")
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().RedChannelMinus();
     }
 }
