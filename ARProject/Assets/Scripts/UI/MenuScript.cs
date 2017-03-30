@@ -25,9 +25,9 @@ public class MenuScript : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
-        Debug.Log("Collision with stylus");
+        //Debug.Log("Collision with something" + collision.gameObject.tag);
         if (collision.gameObject.tag == "StylusSphere")
         {
             colourPalettePanelActivate(isSelecting);

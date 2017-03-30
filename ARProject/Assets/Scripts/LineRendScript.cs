@@ -10,7 +10,7 @@ public class LineRendScript : MonoBehaviour {
     LineRenderer lineRenderer;
     public float startWidth = 0.1f;
     public float endWidth = 0.1f;
-    public float threshold = 0.01f;
+    public float threshold = 0.1f;
     Camera thisCamera;
     int lineCount = 0;
 
@@ -104,7 +104,7 @@ public class LineRendScript : MonoBehaviour {
 
 
                 // Draw on the canvas plane (0.0 on the y-axis), but in from the last layer so to avoid z-fighting issues
-                stylusPos.y += 0.1f + (0.05f * lineIndex);
+                stylusPos.y += 0.1f + (0.07f * lineIndex);
 
 
 
@@ -122,7 +122,7 @@ public class LineRendScript : MonoBehaviour {
                 else
                 {
                     draw = true;
-                    Debug.Log("Greater than threshold! Distance: " + dist);
+                    //Debug.Log("Greater than threshold! Distance: " + dist);
                 }
 
 
