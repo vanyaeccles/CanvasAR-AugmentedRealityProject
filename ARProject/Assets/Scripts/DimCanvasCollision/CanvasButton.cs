@@ -10,21 +10,28 @@ public class CanvasButton : MonoBehaviour {
 
     void Awake()
     {
-        GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
+        //GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "StylusSphere")
-            GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "StylusSphere")
+    //        GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
 
-        buttonText.text = SetText();
-    }
+    //    buttonText.text = SetText();
+    //}
 
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "StylusSphere")
+        {
+            GameObject.Find("Canvas").GetComponent<CanvasManager>().RenderCanvas();
+
+            buttonText.text = SetText();
+
             isCanvasOn = !isCanvasOn;
+        }
+            
     }
 
     string SetText()

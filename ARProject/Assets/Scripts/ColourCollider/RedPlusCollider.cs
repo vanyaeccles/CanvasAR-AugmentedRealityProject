@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RedPlusCollider : MonoBehaviour {
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         //Debug.Log("Red Plus");
         if (collision.gameObject.tag == "StylusSphere")

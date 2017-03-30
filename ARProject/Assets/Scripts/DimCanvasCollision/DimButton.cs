@@ -15,19 +15,26 @@ public class DimButton : MonoBehaviour {
         
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "StylusSphere")
-            GameObject.Find("CanvasTarget").GetComponent<LineManager>().Toggle3d();
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "StylusSphere")
+    //        GameObject.Find("CanvasTarget").GetComponent<LineManager>().Toggle3d();
 
-        buttonText.text = SetText();
-    }
+    //    buttonText.text = SetText();
+    //}
 
 
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "StylusSphere")
+        {
+            GameObject.Find("CanvasTarget").GetComponent<LineManager>().Toggle3d();
+
+            buttonText.text = SetText();
+
             is2D = !is2D;
+        }
+            
     }
 
     string SetText()

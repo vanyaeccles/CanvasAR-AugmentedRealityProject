@@ -9,17 +9,20 @@ public class ThicknessButton : MonoBehaviour {
     bool isSelectingThickness;
 
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "StylusSphere")
-            colourPanelActivate(isSelectingThickness);
-    }
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "StylusSphere")
+    //        colourPanelActivate(isSelectingThickness);
+    //}
 
 
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "StylusSphere")
+        {
+            colourPanelActivate(isSelectingThickness);
             isSelectingThickness = !isSelectingThickness;
+        }
     }
 
 

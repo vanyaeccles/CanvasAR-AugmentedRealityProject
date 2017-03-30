@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThicknessMinusCollider : MonoBehaviour {
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "StylusSphere")
             GameObject.Find("CanvasTarget").GetComponent<LineManager>().ThicknessMinus();

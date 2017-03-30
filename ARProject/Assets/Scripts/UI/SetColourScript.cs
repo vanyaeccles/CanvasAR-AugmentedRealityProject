@@ -9,14 +9,15 @@ public class SetColourScript : MonoBehaviour {
     bool isSelectingColour;
 
 
-    void OnCollisionEnter(Collision collision)
-    {
-        colourPanelActivate(isSelectingColour);
-    }
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    colourPanelActivate(isSelectingColour);
+    //}
 
 
     void OnCollisionExit(Collision collision)
     {
+        colourPanelActivate(isSelectingColour);
         isSelectingColour = !isSelectingColour;
     }
 

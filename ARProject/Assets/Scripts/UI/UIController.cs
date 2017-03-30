@@ -13,11 +13,15 @@ public class UIController : MonoBehaviour {
     private LineManager linemanager;
     private CanvasManager canvasmanager;
 
+    private VanyaScript vanya;
 
     void Awake()
     {
         linemanager = GameObject.Find("CanvasTarget").GetComponent<LineManager>();
         canvasmanager = GameObject.Find("Canvas").GetComponent<CanvasManager>();
+
+        vanya = GameObject.Find("vanyamodel").GetComponent<VanyaScript>();
+        
     }
 
 	// Use this for initialization
@@ -111,6 +115,12 @@ public class UIController : MonoBehaviour {
         if (Input.GetKeyDown("z"))
             canvasmanager.RenderCanvas();
 
+
+        //Vanya Model 
+        if (Input.GetKeyDown("l"))
+            vanya.Activate();
+        if (Input.GetKeyDown("k"))
+            vanya.DeActivate();
 
 
     }

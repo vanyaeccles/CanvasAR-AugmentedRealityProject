@@ -84,13 +84,23 @@ public class LineManager : MonoBehaviour {
         
     }
 
-    //public void ProcessHitObject(string objectTag)
-    //{
-    //    if (hit.collider.tag == "DrawCanvas")
-    //    {
+    
+    // This could be used to draw a circle with the specified colour
+    public void DrawDot()
+    {
+        if (!isHoldingLineDrawer)
+        {
+            if (!is3d)
+            {
+                
+            }
 
-    //    }
-    //}
+            if (is3d)
+            {
+                
+            }
+        }
+    }
 
     public void StartDrawing()
     {

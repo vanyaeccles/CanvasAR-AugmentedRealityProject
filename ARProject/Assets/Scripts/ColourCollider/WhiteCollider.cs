@@ -9,7 +9,7 @@ public class WhiteCollider : MonoBehaviour {
         GetComponent<Renderer>().material.color = Color.white;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         //Debug.Log("Green Minus");
         if (collision.gameObject.tag == "StylusSphere")

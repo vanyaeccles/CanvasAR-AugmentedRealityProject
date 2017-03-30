@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GreenPlusCollider : MonoBehaviour {
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         //Debug.Log("Green Plus");
         if (collision.gameObject.tag == "StylusSphere")

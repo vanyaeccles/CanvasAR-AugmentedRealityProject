@@ -101,7 +101,9 @@
     <Compile Include="Assets\Scripts\UI\SaveColourCollider.cs" />
     <Compile Include="Assets\Scripts\UI\SetColourScript.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
+    <Compile Include="Assets\Scripts\UI\UndoButton.cs" />
     <Compile Include="Assets\Scripts\drawer.cs" />
+    <Compile Include="Assets\VanyaScript.cs" />
     <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Scripts\CloudRecoBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Scripts\CylinderTargetBehaviour.cs" />
