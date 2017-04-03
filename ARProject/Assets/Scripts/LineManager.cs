@@ -102,6 +102,7 @@ public class LineManager : MonoBehaviour {
         }
     }
 
+
     public void StartDrawing()
     {
         if (!isHoldingLineDrawer)
@@ -188,13 +189,13 @@ public class LineManager : MonoBehaviour {
 
     public void ThicknessPlus()
     {
-        lineThickness += 0.05f;
+        lineThickness += 0.01f;
         SetLineThickness();
     }
 
     public void ThicknessMinus()
     {
-        lineThickness -= 0.05f;
+        lineThickness -= 0.01f;
         SetLineThickness();
     }
 

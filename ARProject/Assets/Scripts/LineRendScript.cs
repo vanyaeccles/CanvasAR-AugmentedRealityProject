@@ -140,6 +140,51 @@ public class LineRendScript : MonoBehaviour {
                     UpdateLine();
                 }
             }
+
+            if (hit.collider.tag == "VanyaModel")
+            {
+
+                //Debug.Log("HIT" + hit.point);
+                stylusPos = hit.point;
+
+
+                // Draw on the canvas plane (0.0 on the y-axis), but in from the last layer so to avoid z-fighting issues
+                //stylusPos.y += 0.1f + (0.09f * lineIndex);
+                stylusPos.y -= 0.3f;
+
+
+                float dist = Vector3.Distance(lastPos, stylusPos);
+
+
+
+                if (!CheckThreshold(dist))
+                {
+                    //Debug.Log("Less than threshold! Distance: " + dist);
+                    draw = false;
+                    return;
+                }
+
+                else
+                {
+                    draw = true;
+                    //Debug.Log("Greater than threshold! Distance: " + dist);
+                }
+
+
+                if (draw)
+                {
+                    lastPos = stylusPos;
+
+                    //If there's nothing in the list, start it
+                    if (linePoints == null)
+                        linePoints = new List<Vector3>();
+
+
+                    linePoints.Add(stylusPos);
+
+                    UpdateLine();
+                }
+            }
         }
     }
 
