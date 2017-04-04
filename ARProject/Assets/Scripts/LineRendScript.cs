@@ -84,7 +84,7 @@ public class LineRendScript : MonoBehaviour {
 
     void draw2D()
     {
-        Debug.Log("Drawing 2D");
+        //Debug.Log("Drawing 2D");
 
         RaycastHit hit;
         Ray ray = new Ray(stylusLocation.position, stylusLocation.forward);
@@ -96,7 +96,7 @@ public class LineRendScript : MonoBehaviour {
 
             if (hit.collider.tag == "DrawCanvas")
             {
-
+                Debug.Log("Hit canvas");
                 //Debug.Log("HIT" + hit.point);
                 stylusPos = hit.point;
 
@@ -143,14 +143,14 @@ public class LineRendScript : MonoBehaviour {
 
             if (hit.collider.tag == "VanyaModel")
             {
-
+                Debug.Log("Hit vanya");
                 //Debug.Log("HIT" + hit.point);
                 stylusPos = hit.point;
 
 
                 // Draw on the canvas plane (0.0 on the y-axis), but in from the last layer so to avoid z-fighting issues
                 //stylusPos.y += 0.1f + (0.09f * lineIndex);
-                stylusPos.y -= 0.3f;
+                //stylusPos.y -= 0.3f;
 
 
                 float dist = Vector3.Distance(lastPos, stylusPos);

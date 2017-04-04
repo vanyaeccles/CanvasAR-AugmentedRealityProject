@@ -35,7 +35,7 @@ public class LineManager : MonoBehaviour {
     Color savedColour1;
     Color savedColour2;
 
-    public GameObject laser;
+    public GameObject laser; // not used, old implementation of raycast 'pointer'
 
     float lineThickness;
 
