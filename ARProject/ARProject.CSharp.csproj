@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\DimCanvasCollision\CanvasButton.cs" />
     <Compile Include="Assets\Scripts\DimCanvasCollision\DimButton.cs" />
     <Compile Include="Assets\Scripts\DrawStylusScript.cs" />
+    <Compile Include="Assets\Scripts\FocusScript.cs" />
     <Compile Include="Assets\Scripts\LineManager.cs" />
     <Compile Include="Assets\Scripts\LineRendScript.cs" />
     <Compile Include="Assets\Scripts\ThicknessCollider\ThicknessButton.cs" />
