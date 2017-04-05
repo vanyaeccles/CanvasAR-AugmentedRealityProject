@@ -108,7 +108,8 @@ public class UIController : MonoBehaviour {
             linemanager.SetColourYellow();
         if (Input.GetKeyDown("n"))
             linemanager.SetColourBlue();
-
+        if (Input.GetKeyDown("m"))
+            linemanager.SetColourBlack();
 
 
         //Canvas 
