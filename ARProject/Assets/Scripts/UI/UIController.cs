@@ -73,7 +73,15 @@ public class UIController : MonoBehaviour {
 
         if (Input.GetKeyDown("p"))
             linemanager.UndoLastLine();
-            
+
+        //Storing/recalling drawings
+        if (Input.GetKeyDown("s"))
+            linemanager.saveCurrentDrawingList();
+        if (Input.GetKeyDown("a"))
+            linemanager.showSavedDrawing(true);
+        if (Input.GetKeyDown("q"))
+            linemanager.showSavedDrawing(false);
+
 
         // Draw in 3D
         if (Input.GetKeyDown("x"))

@@ -5,7 +5,10 @@ using UnityEngine;
 public class LineManager : MonoBehaviour {
 
     //List of gameobjects to hold the line drawers
-    private List<GameObject> lineDrawers = new List<GameObject>();
+    private List<GameObject> currentLineDrawers = new List<GameObject>();
+    //List for holding a saved list of lines
+    private List<GameObject> savedLineDrawers = new List<GameObject>();
+
     public int lineDrawerIndex;
 
     //instance of the lineDrawer, basically a gameobject with a line renderer and associated LineRendScript for drawing
@@ -30,6 +33,7 @@ public class LineManager : MonoBehaviour {
 
     bool isHoldingLineDrawer;
     bool is3d;
+    bool isSavedLinesActive;
 
     Color activeColour;
     Color savedColour1;
@@ -58,6 +62,7 @@ public class LineManager : MonoBehaviour {
 
         isHoldingLineDrawer = false;
         is3d = false;
+        isSavedLinesActive = false;
     }
 
     // Update is called once per frame
@@ -85,7 +90,7 @@ public class LineManager : MonoBehaviour {
     }
 
     
-    // This could be used to draw a circle with the specified colour
+    // This could be used to draw a circle with the specified colour @TODO
     public void DrawDot()
     {
         if (!isHoldingLineDrawer)
@@ -108,7 +113,7 @@ public class LineManager : MonoBehaviour {
         if (!isHoldingLineDrawer)
         {
             
-            lineDrawerIndex = lineDrawers.Count;
+            lineDrawerIndex = currentLineDrawers.Count;
             //Debug.Log("lineIndex" + lineDrawerIndex);
 
 
@@ -139,7 +144,7 @@ public class LineManager : MonoBehaviour {
     {
         if (isHoldingLineDrawer)
         {
-            lineDrawers.Add(lineDrawer);
+            currentLineDrawers.Add(lineDrawer);
             // Stop drawing from the current game object
             lineDrawer.SendMessage("StopDrawing");
             isHoldingLineDrawer = false;
@@ -159,16 +164,45 @@ public class LineManager : MonoBehaviour {
         //Destroy(lineDrawers[lineDrawers.Count - 1]);
         //lineDrawers.RemoveAt(lineDrawers.Count - 1);
 
-        RemoveLine(lineDrawers[lineDrawers.Count - 1]);
+        RemoveLine(currentLineDrawers[currentLineDrawers.Count - 1]);
 
         Debug.Log("Removing last line");
     }
 
-    void RemoveLine(GameObject lineobject)
+    //removes a line from the current line list
+    public void RemoveLine(GameObject lineobject)
     {
-        lineDrawers.Remove(lineobject);
+        currentLineDrawers.Remove(lineobject);
         Destroy(lineobject);
     }
+
+    // Empties an existing saved list of lines and copies over the current lines
+    public void saveCurrentDrawingList()
+    {
+        savedLineDrawers.Clear();
+        savedLineDrawers.AddRange(currentLineDrawers);
+
+        //Deactivate the saved lines
+        toggleActivationOfLineList(savedLineDrawers, false);
+
+        //clear the current line list
+        currentLineDrawers.Clear();
+    }
+
+    //for deactivation/reactivation of a line list
+    public void toggleActivationOfLineList(List<GameObject> lineList, bool flag)
+    {
+        foreach (GameObject line in lineList)
+        {
+            line.SetActive(flag);
+        }
+    }
+
+    public void showSavedDrawing(bool flag)
+    {
+        toggleActivationOfLineList(savedLineDrawers, flag);
+    }
+    
 
 
 
