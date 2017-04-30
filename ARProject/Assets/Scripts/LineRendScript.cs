@@ -7,6 +7,8 @@ using UnityEngine;
 public class LineRendScript : MonoBehaviour {
 
     List<Vector3> linePoints = new List<Vector3>();
+    List<Vector3> controlPoints = new List<Vector3>();
+
     LineRenderer lineRenderer;
     public float startWidth = 0.1f;
     public float endWidth = 0.1f;
@@ -248,9 +250,28 @@ public class LineRendScript : MonoBehaviour {
 
 
 
+    void UpdateLineCatmullRomSpline()
+    {
+        lineRenderer.SetWidth(startWidth, endWidth);
+        lineRenderer.SetVertexCount(linePoints.Count);
+
+        if (lineCount < 4)
+        {
+            for (int i = lineCount; i < linePoints.Count; i++)
+            {
+                lineRenderer.SetPosition(i, linePoints[i]);
+            }
+            lineCount = linePoints.Count;
+        }
+
+        if(lineCount > 4)
+        {
+            genCatmullRomSpline(lineCount);
+        }
+    }
+
     void UpdateLine()
     {
-        
         lineRenderer.SetWidth(startWidth, endWidth);
         lineRenderer.SetVertexCount(linePoints.Count);
 
@@ -263,5 +284,83 @@ public class LineRendScript : MonoBehaviour {
 
 
 
-    
+    #region SPLINES
+
+    //Generate the spline bewteen 4 points
+    void genCatmullRomSpline(int pos)
+    {
+        //The 4 points we need for spline between p1 and p2
+        Vector3 p0 = linePoints[ClampListPos(pos - 3)];
+        Vector3 p1 = linePoints[ClampListPos(pos - 2)];
+        Vector3 p2 = linePoints[ClampListPos(pos - 1)];
+        Vector3 p3 = linePoints[ClampListPos(pos)];
+
+        //Start position of the line
+        Vector3 lastPosition = p1;
+
+        //Spline's resolution
+        float splineRes = 0.2f;
+
+        int loops = Mathf.FloorToInt(1f / splineRes);
+
+        int lineIndex = lineCount - 3;
+
+        for (int i = 1; i <= loops; i++)
+        {
+            //Get the position in the knot sequence
+            float knotPos = i * splineRes;
+
+            //Find the coord between end points with the Catmull-Rom spline
+            Vector3 newPosition = GetCatmullRomPos(knotPos, p0, p1, p2, p3);
+
+            //Add to line renderer array
+            lineRenderer.SetPosition(lineIndex + i, newPosition);
+
+
+            //Save for the next line segment
+            lastPosition = newPosition;
+        }
+    }
+
+    //Clamp the list positions to allow looping
+    int ClampListPos(int pos)
+    {
+        if (pos < 0)
+        {
+            pos = lineCount - 1;
+        }
+
+        if (pos > lineCount)
+        {
+            pos = 1;
+        }
+        else if (pos > lineCount - 1)
+        {
+            pos = 0;
+        }
+
+        return pos;
+    }
+
+
+    //returns the position between 4 points with the Catmull-Rom spline algorithm
+    Vector3 GetCatmullRomPos(float knotP, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        //Coefficients of the cubic polynomial
+        Vector3 a = 2f * p1;
+        Vector3 b = p2 - p0;
+        Vector3 c = 2f * p0 - 5f * p1 + 4f * p2 - p3;
+        Vector3 d = -p0 + 3f * p1 - 3f * p2 + p3;
+
+
+        // The cubic polynomial: a + b * knotP + c * knotP^2 + d * knotP^3
+        Vector3 position = 0.5f * (a + (b * knotP) + (c * knotP * knotP) + (d * knotP * knotP * knotP));
+
+        return position;
+    }
+
+
+    #endregion
+
+
 }
